@@ -3,79 +3,412 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой первый сайт</title>
-    <!-- Подключаем наши стили -->
-    <link rel="stylesheet" href="style.css">
+    <title>С Днем Рождения, Мама!</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* ЭКРАН 1: Конверт-сюрприз */
+        .envelope-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.5s ease-in-out;
+            z-index: 5;
+            user-select: none;
+        }
+        .envelope {
+            font-size: 120px;
+            line-height: 1;
+            animation: float 2s infinite ease-in-out;
+        }
+        .envelope-hint {
+            margin-top: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff477e;
+            background: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.2);
+            animation: pulse-hint 1.5s infinite;
+        }
+
+        /* ЭКРАН 2: Сама открытка */
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.5);
+            max-width: 400px;
+            width: 100%;
+            z-index: 2;
+            display: none;
+            opacity: 0;
+            transform: scale(0.8) translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .heart-container {
+            margin-bottom: 20px;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .heart {
+            font-size: 90px;
+            display: inline-block;
+            animation: heartbeat 1.4s infinite ease-in-out;
+            user-select: none;
+            will-change: transform;
+        }
+
+        /* Контейнер для стиха с фиксацией высоты */
+        .poem {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #4a4a4a;
+            margin-bottom: 15px;
+            font-style: italic;
+            text-align: center;
+            min-height: 240px;
+        }
+
+        .poem-line {
+            display: block;
+            opacity: 0;
+            transform: translateY(5px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .poem-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Курсор-цветок печатной машинки */
+        .poem-line.typing::after {
+            content: '🌸';
+            font-style: normal;
+            animation: blink 0.6s infinite;
+            margin-left: 3px;
+            font-size: 0.9rem;
+        }
+
+        .signature {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ff477e;
+            margin-top: 15px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .signature.show {
+            opacity: 1;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            will-change: transform;
+        }
+
+        /* АНИМАЦИИ */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            45% { transform: scale(1.05); }
+            70% { transform: scale(1.18); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes pulse-hint {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-    <div class="card">
-        <h1>Привет, меня зовут Вадим</h1>
-        <img src="images/my_photo.jpg" alt="Мое фото" class="avatar">
-        <p class="description">
-            Это моя первая веб-страница.
-           <br> Я только начинаю путь в веб-разработке.
-        </p>
-        <h2>Мои интересы</h2>
-        <ul>
-            <li>Веб-технологии</li>
-            <li>Дизайн</li>
-            <li>Программирование</li>
-        </ul>
-        <h2>Контакты</h2>
-        <p>Email: vad_maslov@mail.ru</p>
-        <a href="#" class="button">Написать мне</a>
-        <!-- Секция "Навыки" -->
-<section class="skills">
-  <h2>Мои навыки</h2>
-  <div class="skill">
-    <span>HTML & CSS</span>
-    <div class="skill-bar"><div class="skill-level" style="width: 85%;"></div></div>
-  </div>
-  <div class="skill">
-    <span>JavaScript</span>
-    <div class="skill-bar"><div class="skill-level" style="width: 60%;"></div></div>
-  </div>
-  <div class="skill">
-    <span>Git & GitHub</span>
-    <div class="skill-bar"><div class="skill-level" style="width: 75%;"></div></div>
-  </div>
-</section>
 
-<!-- Секция "Проекты" -->
-<section class="projects">
-  <h2>Мои проекты</h2>
-  <div class="project-grid">
-    <div class="project-card">
-      <h3>Сайт-визитка</h3>
-      <p>Тот самый сайт, который вы сейчас просматриваете. Сделан с нуля на HTML и CSS.</p>
-      <a href="https://github.com/heaven777paradise-create/Vadim.github.io" target="_blank" class="project-link">Посмотреть код на GitHub →</a>
+    <!-- ЭКРАН 1: КОНВЕРТ -->
+    <div class="envelope-wrapper" id="envelopeWrapper" onclick="openEnvelope(event)">
+        <div class="envelope">✉️</div>
+        <div class="envelope-hint">Нажми, чтобы открыть 💖</div>
     </div>
-    <div class="project-card">
-      <h3>Заголовок проекта 2</h3>
-      <p>Здесь вы можете описать свой следующий проект. Например, "Интерактивный список задач на JavaScript".</p>
-      <a href="#" class="project-link">Скоро здесь будет ссылка</a>
-    </div>
-  </div>
-</section>
 
-<!-- Секция "Контакты" с иконками -->
-<section class="contacts">
-  <h2>Свяжитесь со мной</h2>
-  <div class="contact-links">
-    <a href="mailto:example@mail.com" class="contact-link">
-      ✉️ Email
-    </a>
-    <a href="https://github.com/heaven777paradise-create" target="_blank" class="contact-link">
-      💻 GitHub
-    </a>
-    <a href="#" class="contact-link">
-      💬 Telegram
-    </a>
-  </div>
-</section>
+    <!-- ЭКРАН 2: ОТКРЫТКА -->
+    <div class="card" id="birthdayCard">
+        <div class="heart-container" onclick="celebrate(event, 120)">
+            <div class="heart">❤️</div>
+        </div>
+
+        <div class="poem" id="poemContainer"></div>
+
+        <p class="signature" id="signatureText">✨ Нажми на сердечко! ✨</p>
     </div>
+
+<script>
+    const lines = [
+        "С Днем Рождения, любимая мама,",
+        "Поздравляю сегодня тебя!",
+        "И желаю, чтоб самой счастливой",
+        "И красивой была жизнь твоя.",
+        "",
+        "Долгих лет я тебе пожелаю.",
+        "Пожелаю покоя, добра.",
+        "А еще пожелаю здоровья...",
+        "Я люблю тебя, мама моя!"
+    ];
+
+    let audioCtx = null;
+
+    // Инициализация аудио-контекста (строго по клику пользователя)
+    function initAudio() {
+        if (!audioCtx) {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+            audioCtx.resume();
+        }
+        return audioCtx;
+    }
+
+    // Короткий "пик" для конфетти
+    function playPop() {
+        const ctx = initAudio();
+        if (!ctx) return;
+        try {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(250, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1400, ctx.currentTime + 0.35);
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.35);
+        } catch (e) { console.log(e); }
+    }
+
+    // ===== МЕЛОДИЯ HAPPY BIRTHDAY =====
+    // Ноты в Герцах
+    const NOTES = {
+        C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+        G4: 392.00, A4: 440.00, Bb4: 466.16, B4: 493.88,
+        C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46,
+        G5: 783.99
+    };
+
+    // Мелодия: [нота, длительность в долях]
+    // 1 доля = 0.4 сек (темп ~150 bpm, бодро)
+    const MELODY = [
+        // Happy birthday to you
+        ['C4', 0.75], ['C4', 0.25], ['D4', 1], ['C4', 1], ['F4', 1], ['E4', 2],
+        // Happy birthday to you
+        ['C4', 0.75], ['C4', 0.25], ['D4', 1], ['C4', 1], ['G4', 1], ['F4', 2],
+        // Happy birthday dear mama
+        ['C4', 0.75], ['C4', 0.25], ['C5', 1], ['A4', 1], ['F4', 1], ['E4', 1], ['D4', 2],
+        // Happy birthday to you
+        ['Bb4', 0.75], ['Bb4', 0.25], ['A4', 1], ['F4', 1], ['G4', 1], ['F4', 2],
+        // небольшая пауза в конце
+        [null, 1]
+    ];
+
+    const BEAT = 0.4; // секунд на одну долю
+
+    function playHappyBirthday() {
+        const ctx = initAudio();
+        if (!ctx) return;
+
+        let time = ctx.currentTime + 0.1; // маленькая задержка на старт
+
+        MELODY.forEach(([note, dur]) => {
+            const duration = dur * BEAT;
+            if (note) {
+                playNote(ctx, NOTES[note], time, duration);
+            }
+            time += duration;
+        });
+
+        // Общее время мелодии — вернём, чтобы при желании использовать
+        return time - ctx.currentTime;
+    }
+
+    function playNote(ctx, freq, startTime, duration) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'triangle'; // мягкий "музыкальный" тембр
+        osc.frequency.setValueAtTime(freq, startTime);
+
+        // Плавная атака и затухание — чтобы не было щелчков
+        const attack = 0.02;
+        const release = 0.15;
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(0.22, startTime + attack);
+        gain.gain.setValueAtTime(0.22, startTime + duration - release);
+        gain.gain.linearRampToValueAtTime(0, startTime + duration);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.05);
+    }
+
+    // ===== ЛОГИКА ОТКРЫТКИ =====
+
+    function openEnvelope(e) {
+        // Запускаем мелодию сразу по клику (жест пользователя = разрешён звук)
+        playHappyBirthday();
+
+        document.getElementById('envelopeWrapper').style.display = 'none';
+        const card = document.getElementById('birthdayCard');
+
+        card.style.display = 'block';
+        setTimeout(() => {
+            card.classList.add('show');
+            celebrate(null, 150);
+            setTimeout(typePoem, 600);
+        }, 50);
+    }
+
+    function typePoem() {
+        const container = document.getElementById('poemContainer');
+        let currentLineIndex = 0;
+
+        function typeNextLine() {
+            if (currentLineIndex >= lines.length) {
+                document.getElementById('signatureText').classList.add('show');
+                return;
+            }
+
+            const text = lines[currentLineIndex];
+            const lineElement = document.createElement('span');
+            lineElement.className = 'poem-line visible typing';
+            container.appendChild(lineElement);
+
+            if (text === "") {
+                lineElement.innerHTML = "<br>";
+                lineElement.classList.remove('typing');
+                currentLineIndex++;
+                setTimeout(typeNextLine, 200);
+                return;
+            }
+
+            let charIndex = 0;
+            function typeChar() {
+                if (charIndex < text.length) {
+                    lineElement.textContent += text[charIndex];
+                    charIndex++;
+                    setTimeout(typeChar, 45);
+                } else {
+                    lineElement.classList.remove('typing');
+                    currentLineIndex++;
+                    setTimeout(typeNextLine, 500);
+                }
+            }
+            typeChar();
+        }
+
+        typeNextLine();
+    }
+
+    function celebrate(e, count = 100) {
+        playPop();
+        const colors = ['#ff477e', '#ff70a6', '#ff97b7', '#ffcad4', '#ffb5a7', '#48cae4', '#ffb703', '#9b5de5', '#f15bb5'];
+
+        let startX, startY;
+        if (e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            startX = rect.left + rect.width / 2;
+            startY = rect.top + rect.height / 2;
+        } else {
+            startX = window.innerWidth / 2;
+            startY = window.innerHeight / 2;
+        }
+
+        for (let i = 0; i < count; i++) {
+            const p = document.createElement('div');
+            p.className = 'confetti-piece';
+            p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            const sizeWidth = Math.random() * 8 + 6;
+            const sizeHeight = Math.random() > 0.5 ? sizeWidth : Math.random() * 4 + 12;
+            p.style.width = `${sizeWidth}px`;
+            p.style.height = `${sizeHeight}px`;
+
+            if (Math.random() > 0.4) {
+                p.style.borderRadius = '50%';
+            } else if (Math.random() > 0.5) {
+                p.style.borderRadius = '3px';
+            }
+
+            p.style.left = `${startX}px`;
+            p.style.top = `${startY}px`;
+            document.body.appendChild(p);
+
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 18 + 7;
+            let velX = Math.cos(angle) * velocity;
+            let velY = Math.sin(angle) * velocity - 2;
+            let posX = startX;
+            let posY = startY;
+            let opacity = 1;
+            let rotation = Math.random() * 360;
+            let rotSpeed = (Math.random() - 0.5) * 10;
+
+            function update() {
+                velY += 0.35;
+                velX *= 0.97;
+                posX += velX;
+                posY += velY;
+                opacity -= 0.015;
+                rotation += rotSpeed;
+
+                p.style.transform = `translate3d(${posX - startX}px, ${posY - startY}px, 0) rotate(${rotation}deg)`;
+                p.style.opacity = opacity;
+
+                if (opacity > 0 && posY < window.innerHeight + 50) {
+                    requestAnimationFrame(update);
+                } else {
+                    p.remove();
+                }
+            }
+            requestAnimationFrame(update);
+        }
+    }
+</script>
 </body>
-
 </html>
-
-
